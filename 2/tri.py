@@ -18,20 +18,20 @@ def rotate(dt):
     glRotatef(0.5, dt, dt, dt)
 
 if __name__ == "__main__":
-    glEnable(GL_MULTISAMPLE_ARB)
-    glEnable(GL_DEPTH_TEST)
-    glEnable(GL_LIGHTING)
-    glEnable(GL_LIGHT0)
+    tri_verts = (
+        (0, 0, 0),
+        (0, 1, 0),
+        (1, 0, 0),
+    )
+    tv_flat = list(sum(tri_verts, ()))
 
-    for i in range(100):
-        cube = pyglet.model.load("cube.obj", batch=batch)
-        #cube = pyglet.resource.model("cube.obj", batch=batch)
-        cube.translation = i * 1, 0, 0
-        cube.rotation = 0, 0, 0
-        cube.scale = 1, 1, 1
+    #  make a triangle
+    vlist = batch.add(3, GL_TRIANGLES, None,
+        ('v3f', tv_flat),
+        ('c3f', (1, 0, 0,
+                 0, 1, 0,
+                 0, 0, 1)))
 
-    scale = 0.1
-    glScalef(scale, scale, scale)
-    glTranslatef(0.5, 0, -10) 
+    glTranslatef(0.5, 0, -3) 
     pyglet.clock.schedule_interval(rotate, 1/60.0)
     pyglet.app.run()
