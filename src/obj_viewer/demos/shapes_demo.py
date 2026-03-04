@@ -23,7 +23,7 @@ class ShapesDemo(pyglet.window.Window):
         self.rectangle = shapes.Rectangle(0, 190, 720, 100, color=(255, 22, 20), batch=self.batch)
         self.rectangle.opacity = 64
 
-        self.line = shapes.Line(0, 0, 0, 480, width=4, color=(200, 20, 20), batch=self.batch)
+        self.line = shapes.Line(0, 0, 0, 480, thickness=4, color=(200, 20, 20), batch=self.batch)
 
         self.triangle = shapes.Triangle(10, 10, 190, 10, 100, 150, color=(55, 255, 255), batch=self.batch)
         self.triangle.opacity = 175
@@ -48,12 +48,10 @@ class ShapesDemo(pyglet.window.Window):
         self.square.rotation = self.time * 15
         self.rectangle.y = 200 + math.sin(self.time) * 190
         self.circle.radius = 175 + math.sin(self.time * 1.17) * 50
-        self.line.position = (
-            360 + math.sin(self.time * 0.81) * 360,
-            0,
-            360 + math.sin(self.time * 1.34) * 360,
-            480,
-        )
+        self.line.x = 360 + math.sin(self.time * 0.81) * 360
+        self.line.y = 0
+        self.line.x2 = 360 + math.sin(self.time * 1.34) * 360
+        self.line.y2 = 480
         self.arc.rotation = self.time * 30
         self.star.rotation = self.time * 50
         self.ellipse.b = abs(math.sin(self.time) * 100)
@@ -64,8 +62,11 @@ class ShapesDemo(pyglet.window.Window):
         self.set_size(self.width, self.height)
 
 
-
-if __name__ == "__main__":
+def main() -> None:
     demo = ShapesDemo(720, 480)
     pyglet.clock.schedule_interval(demo.update, 1/30)
     pyglet.app.run()
+
+
+if __name__ == "__main__":
+    main()
